@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 
+const auth = require('../../middleware/auth');
 const User = require('../../model/User');
 const config = require('config');
 
@@ -63,7 +64,17 @@ router.post(
       user.password = await bcrypt.hash(password, salt);
 
       await user.save();
-      res.json(user);
+
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+
+      jwt.sign(payload, config.get('jwtSecret'), (err, token) => {
+        if (err) throw err;
+        res.status(200).json({ token });
+      });
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -109,10 +120,7 @@ router.post(
 
       jwt.sign(payload, config.get('jwtSecret'), (err, token) => {
         if (err) throw err;
-        res.json({
-          success: true,
-          token: 'Bearer ' + token
-        });
+        res.json({ token });
       });
     } catch (err) {
       console.error(err.message);
@@ -120,5 +128,18 @@ router.post(
     }
   }
 );
+
+// @route   GET api/users/current
+// @desc    Return current user
+// @access  Private
+router.get('/current', auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.user.id).select('-password');
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;

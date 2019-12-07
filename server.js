@@ -1,8 +1,9 @@
 const express = require('express');
 const connectDB = require('./config/db');
+
 const app = express();
 
-//DB connection
+// DB connection
 connectDB();
 
 // InitMiddleware
