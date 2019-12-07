@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://Shreyas:shreyas@ojusconnector-uxwta.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://Shreyas:shreyas@kontaktkeeper-qarcd.mongodb.net/OjusConnector?retryWrites=true&w=majority",
+  "jwtSecret": "OjusSecret"
 }
