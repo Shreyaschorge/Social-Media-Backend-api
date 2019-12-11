@@ -2,8 +2,13 @@ const mongoose = require('mongoose');
 
 const ProfileSchema = mongoose.Schema({
   user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  },
+  handle: {
+    type: String,
+    required: true,
+    max: 40
   },
   profilePhoto: {
     data: Buffer,
@@ -20,5 +25,27 @@ const ProfileSchema = mongoose.Schema({
   bio: {
     type: String,
     required: true
+  },
+  social: {
+    youtube: {
+      type: String
+    },
+    twitter: {
+      type: String
+    },
+    facebook: {
+      type: String
+    },
+    linkedin: {
+      type: String
+    },
+    instagram: {
+      type: String
+    },
+    snapchat: {
+      type: String
+    }
   }
 });
+
+module.exports = mongoose.model('profile', ProfileSchema);

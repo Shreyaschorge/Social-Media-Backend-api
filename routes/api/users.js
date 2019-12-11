@@ -67,7 +67,9 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id
+          id: user.id,
+          avatar: user.avatar,
+          email: user.email
         }
       };
 
@@ -114,7 +116,9 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id
+          id: user.id,
+          avatar: user.avatar,
+          email: user.email
         }
       };
 
